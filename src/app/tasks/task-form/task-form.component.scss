@@ -1,0 +1,56 @@
+.task-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: 400;
+  margin-bottom: 32px;
+  color: #2fb56d;
+  text-align: center;
+  font-family: 'Erica One', 'sans-serif';
+}
+
+.task-form-card {
+  width: 100%;
+  max-width: 600px;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-checkbox {
+  margin-top: 8px;
+}
+
+button {
+  align-self: flex-end;
+  margin-top: 16px;
+  background-color: gray;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+
+  .action-button {
+    margin-left: 10px;
+  }
+}

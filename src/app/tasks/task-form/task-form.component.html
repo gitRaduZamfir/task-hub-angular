@@ -1,0 +1,34 @@
+<div class="task-container">
+  <h2>Add new task</h2>
+
+  <mat-card class="task-form-card">
+    <form [formGroup]="taskForm" (ngSubmit)="submitForm()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Titlu</mat-label>
+        <input style="color: darkslategray;" matInput formControlName="title" required />
+        <mat-error *ngIf="taskForm.get('title')?.hasError('required')">
+          Title is mandatory!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Deadline</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="deadline" required />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="taskForm.get('deadline')?.hasError('required')">
+          Select a date!
+        </mat-error>
+      </mat-form-field>
+
+      <app-categories></app-categories>
+
+      <mat-checkbox formControlName="done">Done</mat-checkbox>
+
+      <div class="button-container">
+        <button class="action-button" mat-flat-button style="color: white; background-color: rgb(98, 176, 255);"  type="button" routerLink="/tasks">Back</button>
+        <button class="action-button" mat-flat-button style="color: white; background-color: rgb(238, 153, 62);" type="submit">Add</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

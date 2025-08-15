@@ -1,0 +1,37 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Cumpara paine",
+      "done": false,
+      "deadline": "2025-08-07",
+      "category": "Personal"
+    },
+    {
+      "id": "2",
+      "title": "Cumpara lapte",
+      "done": true,
+      "deadline": "2025-09-07",
+      "category": "Personal"
+    },
+    {
+      "id": "608f",
+      "title": "De dus la zi de nastere",
+      "deadline": "2025-08-08",
+      "category": "Personal",
+      "done": false
+    }
+  ],
+  "config": [
+    {
+      "id": "categories",
+      "categories": [
+        "Work",
+        "School",
+        "Test",
+        "Test 2",
+        "Third"
+      ]
+    }
+  ]
+}

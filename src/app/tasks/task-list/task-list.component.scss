@@ -1,0 +1,106 @@
+.task-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  font-size: 4rem;
+  font-weight: 400;
+  margin-bottom: 32px;
+  color: #2fb56d;
+  text-align: center;
+  font-family: 'Erica One', 'sanserif';
+}
+
+.task-done {
+  border-left: 4px solid #4caf50;
+  opacity: 0.8;
+
+  .status-icon {
+    color: #4caf50;
+  }
+
+  .status-label {
+    color: #4caf50;
+    font-weight: 600;
+  }
+
+  .title-done {
+    text-decoration: line-through;
+    color: #666;
+  }
+}
+
+.task-pending {
+  border-left: 4px solid #ff9800;
+
+  .status-icon {
+    color: #ff9800;
+  }
+
+  .status-label {
+    color: #ff9800;
+    font-weight: 600;
+  }
+}
+
+mat-card {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  mat-card-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  mat-card-content p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+  }
+
+  @media (min-width: 600px) {
+    max-width: 500px;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 600px;
+  }
+}
+
+.new-task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:hover{
+    background-color: rgb(59, 121, 255);
+    transform: translateY(0px);
+
+    mat-icon{
+      color: white;
+    }
+  }
+}

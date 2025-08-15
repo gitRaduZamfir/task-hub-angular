@@ -1,0 +1,36 @@
+
+
+
+<div style="display: flex; align-content: baseline;">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-select formControlName="category" [value]="selectedCategory">
+      <mat-option *ngFor="let cat of categories" [value]="cat" (click)="toggleSelection(cat, $event);">
+        {{cat}}
+        <mat-icon *ngIf="cat !== selectedCategory" style="font-size: small; margin-top: 10px;" (click)="deleteCategory(cat); $event.stopPropagation()">close</mat-icon>
+      </mat-option>
+      <mat-option style="background-color: dodgerblue;" (click)="showNewCategoryInput();">
+          <span style="text-align: center;">Add new</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <ng-container *ngIf="isInputVisible">
+    <mat-form-field  appearance="outline" class="full-width" style="margin-left: 10px;" form-field-color="secondary">  
+      <input #categoryInput 
+            type="text" 
+            placeholder="Enter category" 
+            style="border-color: blue" 
+            matInput 
+            (input)="toggleButtons();" />
+    </mat-form-field>
+    <div *ngIf="showButtons" class="full-width" style="margin-left: 10px; margin-top: 10px;">
+      <mat-icon style="font-size: smaller; margin-top: 10px;" (click)="closeAddCategory();">close</mat-icon>
+      <mat-icon style="font-size: smaller; margin-top: 10px;" (click)="addCategory(categoryInput.value)">check</mat-icon>
+    </div>
+  </ng-container>
+  <div *ngIf="showAlertMessage" style="margin-left: 20px; margin-top:18px">
+    <span  style="color: red; font-weight: 400; font-size: small;">This category already exists!</span>
+  </div>
+  <div *ngIf="showSuccessMessage" style="margin-left: 20px; margin-top:18px">
+    <span  style="color: rgb(0, 218, 138); font-weight: 400; font-size: small;">This category successfully added!</span>
+  </div>
+</div>

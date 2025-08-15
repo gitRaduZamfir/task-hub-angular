@@ -1,0 +1,26 @@
+<div class="task-container">
+  <h2>TaskHub</h2>
+  <mat-card class="new-task" routerLink="/add" role="button" tabindex="0">
+    <mat-icon>add</mat-icon>
+  </mat-card>
+  <mat-card *ngFor="let task of tasks" [ngClass]="task.done ? 'task-done' : 'task-pending'">
+    <mat-card-title>
+      <mat-icon class="status-icon">
+        {{ task.done ? 'check_circle' : 'schedule' }}
+      </mat-icon>
+      <span [ngClass]="{ 'title-done': task.done }">
+        {{ task.title }}
+      </span>
+    </mat-card-title>
+    <mat-card-content>
+      <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+      <p><strong>Categorie:</strong> {{ task.category }}</p>
+      <p>
+        <strong>Status:</strong>
+        <span class="status-label">
+          {{ task.done ? 'Done' : 'In progress' }}
+        </span>
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
