@@ -17,6 +17,11 @@ export class TaskService {
     return this.http.get<Task[]>(this.apiUrl)
   }
 
+  getTask(id: string): Observable<Task> {
+    return this.http.get<Task>(`${this.apiUrl}/${id}`)
+  }
+
+
   createTask(task: Task){
     return this.http.post<Task>('http://localhost:3000/tasks', task);
   }
@@ -33,5 +38,13 @@ export class TaskService {
 
   addNewCategory(categories: Categories){
     return this.http.put('http://localhost:3000/config/' + `${categories.id}`, categories);
+  }
+
+  doneTask(task: Task){
+    return this.http.put('http://localhost:3000/tasks/' + `${task.id}`, task);
+  }
+
+  deleteTask(task: Task){
+    return this.http.delete(`http://localhost:3000/tasks/${task.id}`);
   }
 }

@@ -4,23 +4,29 @@
     <mat-icon>add</mat-icon>
   </mat-card>
   <mat-card *ngFor="let task of tasks" [ngClass]="task.done ? 'task-done' : 'task-pending'">
-    <mat-card-title>
-      <mat-icon class="status-icon">
-        {{ task.done ? 'check_circle' : 'schedule' }}
-      </mat-icon>
-      <span [ngClass]="{ 'title-done': task.done }">
-        {{ task.title }}
-      </span>
-    </mat-card-title>
-    <mat-card-content>
-      <p><strong>Deadline:</strong> {{ task.deadline }}</p>
-      <p><strong>Categorie:</strong> {{ task.category }}</p>
-      <p>
-        <strong>Status:</strong>
-        <span class="status-label">
-          {{ task.done ? 'Done' : 'In progress' }}
+      <div class="task-btns-container">
+        <mat-icon *ngIf="task.done ? false : true" style="font-size: smaller;" (click)="markAsDone(task);">check</mat-icon>
+        <mat-icon style="font-size: smaller;" (click)="editTask(task);">edit</mat-icon>
+        <mat-icon style="font-size: smaller;" (click)="deleteTask(task);">close</mat-icon>
+      </div>
+      <mat-card-title>
+        <mat-icon class="status-icon">
+          {{ task.done ? 'check_circle' : 'schedule' }}
+        </mat-icon>
+        <span [ngClass]="{ 'title-done': task.done }">
+          {{ task.title }}
         </span>
-      </p>
-    </mat-card-content>
+      </mat-card-title>
+      <mat-card-content>
+        <p><strong>Date:</strong> {{ task.date }}</p>
+        <p><strong>Time:</strong> {{ task.time }}</p>
+        <p><strong>Categorie:</strong> {{ task.category }}</p>
+        <p>
+          <strong>Status:</strong>
+          <span class="status-label">
+            {{ task.done ? 'Done' : 'In progress' }}
+          </span>
+        </p>
+      </mat-card-content>
   </mat-card>
 </div>

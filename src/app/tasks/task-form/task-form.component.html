@@ -11,19 +11,26 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Deadline</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="deadline" required />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="taskForm.get('deadline')?.hasError('required')">
-          Select a date!
-        </mat-error>
-      </mat-form-field>
-
+      <div style="width: 100%; display: flex; align-content: space-between;">
+        <mat-form-field appearance="outline" >
+          <mat-label>Date</mat-label>
+          <input matInput [matDatepicker]="datepicker" formControlName="date" required />
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker></mat-datepicker>
+          <mat-error style="padding: 0px;" *ngIf="taskForm.get('date')?.hasError('required')">
+            Select a date!
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="margin-left: auto;">
+          <mat-label>Time</mat-label>
+            <input matInput [matTimepicker]="timepicker" formControlName="time" />
+            <mat-timepicker-toggle matSuffix [for]="timepicker"/>
+            <mat-timepicker #timepicker format="24h"/>
+        </mat-form-field>
+      </div>
       <app-categories></app-categories>
 
-      <mat-checkbox formControlName="done">Done</mat-checkbox>
+      <mat-checkbox formControlName="done" [checked]="taskId ? task.done : false">Done</mat-checkbox>
 
       <div class="button-container">
         <button class="action-button" mat-flat-button style="color: white; background-color: rgb(98, 176, 255);"  type="button" routerLink="/tasks">Back</button>

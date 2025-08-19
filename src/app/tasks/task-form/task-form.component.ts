@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskService } from '../../core/services/task.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,6 +14,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
 import { CategoriesComponent } from "./categories/categories.component";
+import { MatTimepickerModule } from '@angular/material/timepicker';
+import { Task } from '../../core/models/task.model';
 
 @Component({
   standalone: true,
@@ -28,24 +30,45 @@ import { CategoriesComponent } from "./categories/categories.component";
     MatCheckboxModule,
     RouterModule,
     MatDatepickerModule,
-    MatNativeDateModule, CategoriesComponent],
+    MatNativeDateModule, CategoriesComponent, MatTimepickerModule],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.scss'
 })
 export class TaskFormComponent {
   taskForm: FormGroup;
   categories: string[] = [];
+  task!: Task;
+  taskId: string | null = null;
 
-  constructor(private fb: FormBuilder, private taskService: TaskService, private router: Router){
+  constructor(private fb: FormBuilder, private taskService: TaskService, private router: Router, private route: ActivatedRoute){
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
-      deadline: ['', Validators.required],
+      date: ['', Validators.required],
+      time: [''],
       category: ['General'],
       done: [false]
     })
+
+    
   }
 
-
+  ngOnInit(): void{
+    this.taskId = this.route.snapshot.paramMap.get('id');
+    if (this.taskId) {
+      this.taskService.getTask(this.taskId).subscribe((data) => {
+        this.task = data;
+        this.taskForm.patchValue({
+        title: this.task.title,
+        date: this.task.date ? new Date(this.task.date) : '',
+        time: this.task.time ? this.task.time : '',
+        category: this.task.category,
+        done: this.task.done
+      });
+      });
+    } else {
+      console.error('ID-ul task-ului lipse?te din rut?!');
+    }
+  }
 
   submitForm(){ 
     if(this.taskForm.invalid){
@@ -53,12 +76,31 @@ export class TaskFormComponent {
       return;
     }
 
-    const newTask = this.taskForm.value;
+    const rawTask = this.taskForm.value;
+
+    let formattedDate: string | null = null;
+    if (rawTask.date instanceof Date){
+      formattedDate = rawTask.date.toLocaleDateString('ro-RO');
+    }
+
+    let formattedTime: string | null = null;
+    if (rawTask.time instanceof Date){
+      formattedTime = rawTask.time.toLocaleTimeString('en-GB');
+    }else if (typeof formattedTime === "string"){
+      formattedTime = rawTask.time;
+    }
+
+    const newTask = {
+      ...rawTask,
+      date: formattedDate,
+      time: formattedTime
+    };
 
     this.taskService.createTask(newTask).subscribe(() => {
-        this.router.navigate(['/tasks']);
-    })
+      this.router.navigate(['/tasks']);
+    });
   }
-
-
 }
+
+
+//TODO de reolvat problema cu Time si cu presectarea categoriei
