@@ -31,7 +31,7 @@ export class TaskListComponent {
   markAsDone(task: Task) :void{
     const updatedTask = task;
     updatedTask.done = true;
-    this.taskService.doneTask(updatedTask).subscribe({
+    this.taskService.editTask(updatedTask).subscribe({
       next: () => {
         this.taskService.getTasks().subscribe((data)=>{
           this.tasks = data;

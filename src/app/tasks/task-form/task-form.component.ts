@@ -30,7 +30,9 @@ import { Task } from '../../core/models/task.model';
     MatCheckboxModule,
     RouterModule,
     MatDatepickerModule,
-    MatNativeDateModule, CategoriesComponent, MatTimepickerModule],
+    MatNativeDateModule, 
+    CategoriesComponent, 
+    MatTimepickerModule],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.scss'
 })
@@ -40,16 +42,19 @@ export class TaskFormComponent {
   task!: Task;
   taskId: string | null = null;
 
-  constructor(private fb: FormBuilder, private taskService: TaskService, private router: Router, private route: ActivatedRoute){
+  constructor(private fb: FormBuilder, 
+    private taskService: TaskService, 
+    private router: Router, 
+    private route: ActivatedRoute){
+      
     this.taskForm = this.fb.group({
+      id: [null],
       title: ['', Validators.required],
       date: ['', Validators.required],
       time: [''],
       category: ['General'],
       done: [false]
     })
-
-    
   }
 
   ngOnInit(): void{
@@ -58,15 +63,14 @@ export class TaskFormComponent {
       this.taskService.getTask(this.taskId).subscribe((data) => {
         this.task = data;
         this.taskForm.patchValue({
-        title: this.task.title,
-        date: this.task.date ? new Date(this.task.date) : '',
-        time: this.task.time ? this.task.time : '',
-        category: this.task.category,
-        done: this.task.done
+          id: this.task.id,
+          title: this.task.title,
+          date: this.task.date ? new Date(this.task.date) : '',
+          time: this.task.time ? new Date(this.task.time) : '',
+          category: this.task.category,
+          done: this.task.done
+        });
       });
-      });
-    } else {
-      console.error('ID-ul task-ului lipse?te din rut?!');
     }
   }
 
@@ -75,32 +79,20 @@ export class TaskFormComponent {
       this.taskForm.markAllAsTouched();
       return;
     }
+    const newTask = this.taskForm.value;
 
-    const rawTask = this.taskForm.value;
-
-    let formattedDate: string | null = null;
-    if (rawTask.date instanceof Date){
-      formattedDate = rawTask.date.toLocaleDateString('ro-RO');
+    if(this.taskId){
+      this.taskService.editTask(newTask).subscribe({
+        next: () => {
+          this.router.navigate(['/tasks']);
+        },
+        error: (err) => console.error(err)
+      })
+    }else{
+      this.taskService.createTask(newTask).subscribe(() => {
+        this.router.navigate(['/tasks']);
+      });
     }
-
-    let formattedTime: string | null = null;
-    if (rawTask.time instanceof Date){
-      formattedTime = rawTask.time.toLocaleTimeString('en-GB');
-    }else if (typeof formattedTime === "string"){
-      formattedTime = rawTask.time;
-    }
-
-    const newTask = {
-      ...rawTask,
-      date: formattedDate,
-      time: formattedTime
-    };
-
-    this.taskService.createTask(newTask).subscribe(() => {
-      this.router.navigate(['/tasks']);
-    });
   }
 }
 
-
-//TODO de reolvat problema cu Time si cu presectarea categoriei

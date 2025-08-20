@@ -40,7 +40,7 @@ export class TaskService {
     return this.http.put('http://localhost:3000/config/' + `${categories.id}`, categories);
   }
 
-  doneTask(task: Task){
+  editTask(task: Task){
     return this.http.put('http://localhost:3000/tasks/' + `${task.id}`, task);
   }
 

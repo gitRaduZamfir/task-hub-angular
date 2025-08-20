@@ -18,8 +18,8 @@
         </span>
       </mat-card-title>
       <mat-card-content>
-        <p><strong>Date:</strong> {{ task.date }}</p>
-        <p><strong>Time:</strong> {{ task.time }}</p>
+        <p><strong>Date:</strong> {{ task.date.substring(0,10) }}</p>
+        <p><strong>Time:</strong> {{ task.time.substring(11,16) }}</p>
         <p><strong>Categorie:</strong> {{ task.category }}</p>
         <p>
           <strong>Status:</strong>

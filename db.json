@@ -1,34 +1,10 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Cumpara paine",
-      "done": true,
-      "date": "2025-08-07",
-      "time": "12:00:00",
-      "category": "Personal"
-    },
-    {
-      "id": "608f",
-      "title": "De dus la zi de nastere",
-      "date": "2025-08-07",
-      "time": "12:00:00",
-      "category": "Personal",
-      "done": true
-    },
-    {
-      "id": "99bd",
-      "title": "test4",
-      "date": "2025-08-07",
-      "time": "12:00:00",
-      "category": "General",
-      "done": true
-    },
-    {
-      "id": "6c33",
-      "title": "test 444",
-      "date": "28.08.2025",
-      "time": "02:00:00",
+      "id": "bf8b",
+      "title": "test1",
+      "date": "2025-08-27T21:00:00.000Z",
+      "time": "2025-08-19T22:30:00.000Z",
       "category": "General",
       "done": false
     }
@@ -41,7 +17,8 @@
         "School",
         "Test",
         "Test 2",
-        "Third"
+        "Third",
+        "General"
       ]
     }
   ]

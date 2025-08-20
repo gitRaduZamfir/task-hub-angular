@@ -3,6 +3,7 @@
 
   <mat-card class="task-form-card">
     <form [formGroup]="taskForm" (ngSubmit)="submitForm()">
+      <input type="hidden" formControlName="id">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Titlu</mat-label>
         <input style="color: darkslategray;" matInput formControlName="title" required />
@@ -28,13 +29,13 @@
             <mat-timepicker #timepicker format="24h"/>
         </mat-form-field>
       </div>
-      <app-categories></app-categories>
+      <app-categories [pickedCategory]="taskForm.get('category')?.value"></app-categories>
 
-      <mat-checkbox formControlName="done" [checked]="taskId ? task.done : false">Done</mat-checkbox>
+      <mat-checkbox formControlName="done">Done</mat-checkbox>
 
       <div class="button-container">
         <button class="action-button" mat-flat-button style="color: white; background-color: rgb(98, 176, 255);"  type="button" routerLink="/tasks">Back</button>
-        <button class="action-button" mat-flat-button style="color: white; background-color: rgb(238, 153, 62);" type="submit">Add</button>
+        <button class="action-button" mat-flat-button style="color: white; background-color: rgb(238, 153, 62);" type="submit">{{taskId ? 'Edit' : 'Add'}}</button>
       </div>
     </form>
   </mat-card>

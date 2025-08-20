@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { TaskService } from '../../../core/services/task.service';
@@ -15,6 +15,7 @@ import { Categories } from '../../../core/models/category.model';
   styleUrl: './categories.component.scss'
 })
 export class CategoriesComponent {
+  @Input() pickedCategory: string | null = null;
   isInputVisible = false;
   showButtons = false;
   showAlertMessage = false;
@@ -29,6 +30,10 @@ export class CategoriesComponent {
     this.taskService.getCategories().subscribe(data => {
       this.categories = data;
     });
+    console.log(this.pickedCategory);
+    if(this.pickedCategory){
+      this.selectedCategory = this.pickedCategory;
+    }
   }
   
 
@@ -43,8 +48,6 @@ export class CategoriesComponent {
     const exists = this.categories.some(
       cat => cat.toLowerCase() === trimmedValue.toLowerCase()
     );
-
-    console.log(exists);
 
     if (exists) {
       this.closeAddCategory();
