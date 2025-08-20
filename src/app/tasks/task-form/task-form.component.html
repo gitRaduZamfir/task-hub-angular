@@ -29,7 +29,7 @@
             <mat-timepicker #timepicker format="24h"/>
         </mat-form-field>
       </div>
-      <app-categories [pickedCategory]="taskForm.get('category')?.value"></app-categories>
+      <app-categories [pickedCategory]="taskForm.get('category')?.value"  (categoryChange)="taskForm.get('category')?.setValue($event)"></app-categories>
 
       <mat-checkbox formControlName="done">Done</mat-checkbox>
 

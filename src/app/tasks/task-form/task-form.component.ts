@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { CategoriesComponent } from "./categories/categories.component";
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { Task } from '../../core/models/task.model';
+import { generateId } from '../../core/utils/utils';
 
 @Component({
   standalone: true,
@@ -41,14 +42,17 @@ export class TaskFormComponent {
   categories: string[] = [];
   task!: Task;
   taskId: string | null = null;
+  newId: string = '';
 
   constructor(private fb: FormBuilder, 
     private taskService: TaskService, 
     private router: Router, 
     private route: ActivatedRoute){
+
+    this.newId = generateId();
       
     this.taskForm = this.fb.group({
-      id: [null],
+      id: [this.newId],
       title: ['', Validators.required],
       date: ['', Validators.required],
       time: [''],
@@ -58,6 +62,7 @@ export class TaskFormComponent {
   }
 
   ngOnInit(): void{
+    
     this.taskId = this.route.snapshot.paramMap.get('id');
     if (this.taskId) {
       this.taskService.getTask(this.taskId).subscribe((data) => {

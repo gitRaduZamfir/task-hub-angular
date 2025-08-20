@@ -1,12 +1,36 @@
 {
   "tasks": [
     {
-      "id": "bf8b",
-      "title": "test1",
-      "date": "2025-08-27T21:00:00.000Z",
+      "id": "223",
+      "title": "de-i arata lui Petru TaskHub",
+      "date": "2025-08-19T21:00:00.000Z",
+      "time": "2025-08-20T12:00:00.000Z",
+      "category": "School",
+      "done": true
+    },
+    {
+      "id": "123",
+      "title": "test444444",
+      "date": "2025-08-21T21:00:00.000Z",
       "time": "2025-08-19T22:30:00.000Z",
       "category": "General",
       "done": false
+    },
+    {
+      "id": "23",
+      "title": "wefwerwe",
+      "date": "2025-08-28T21:00:00.000Z",
+      "time": "2025-08-20T04:30:00.000Z",
+      "category": "Test",
+      "done": false
+    },
+    {
+      "id": "SkA8",
+      "title": "sdfsdf",
+      "date": "2025-08-21T21:00:00.000Z",
+      "time": "2025-08-19T22:30:00.000Z",
+      "category": "Test",
+      "done": true
     }
   ],
   "config": [
@@ -18,7 +42,8 @@
         "Test",
         "Test 2",
         "Third",
-        "General"
+        "General",
+        "personal"
       ]
     }
   ]

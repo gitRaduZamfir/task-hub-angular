@@ -1,6 +1,6 @@
 <div style="display: flex; align-content: baseline;">
   <mat-form-field appearance="outline" class="full-width">
-    <mat-select formControlName="category" [value]="pickedCategory">
+    <mat-select formControlName="category" [value]="pickedCategory" (selectionChange)="onCategorySelected($event.value)">
       <mat-option *ngFor="let cat of categories" [value]="cat" (click)="toggleSelection(cat, $event);">
         {{cat}}
         <mat-icon *ngIf="cat !== selectedCategory" style="font-size: small; margin-top: 10px;" (click)="deleteCategory(cat); $event.stopPropagation()">close</mat-icon>

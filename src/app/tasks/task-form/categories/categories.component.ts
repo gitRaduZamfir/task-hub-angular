@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { TaskService } from '../../../core/services/task.service';
@@ -16,6 +16,7 @@ import { Categories } from '../../../core/models/category.model';
 })
 export class CategoriesComponent {
   @Input() pickedCategory: string | null = null;
+  @Output() categoryChange = new EventEmitter<string>();
   isInputVisible = false;
   showButtons = false;
   showAlertMessage = false;
@@ -30,7 +31,7 @@ export class CategoriesComponent {
     this.taskService.getCategories().subscribe(data => {
       this.categories = data;
     });
-    console.log(this.pickedCategory);
+
     if(this.pickedCategory){
       this.selectedCategory = this.pickedCategory;
     }
@@ -65,6 +66,7 @@ export class CategoriesComponent {
         this.showSuccessMessage = true;
         setTimeout(()=>this.showSuccessMessage = false, 1500)
     });
+    this.onCategorySelected(trimmedValue);
   }
 
   deleteCategory(category: string) :void{
@@ -81,9 +83,9 @@ export class CategoriesComponent {
   }
 
   toggleSelection(cat: string, event: MouseEvent) {
-    event.stopPropagation(); // previne selectarea automat?
+    event.stopPropagation();
     if (this.selectedCategory === cat) {
-      this.selectedCategory = null; // deselecteaz?
+      this.selectedCategory = null;
     } else {
       this.selectedCategory = cat;
     }
@@ -96,6 +98,11 @@ export class CategoriesComponent {
   closeAddCategory(): void{
     this.showButtons = false;
     this.isInputVisible= false;
+  }
+
+  onCategorySelected(cat: string){
+    this.selectedCategory = cat;
+    this.categoryChange.emit(cat);
   }
 
 }
