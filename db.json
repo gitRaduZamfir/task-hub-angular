@@ -46,5 +46,9 @@
         "personal"
       ]
     }
+  ],
+  "users": [
+    { "id": 1, "username": "admin", "password": "1234" },
+    { "id": 2, "username": "test", "password": "test" }
   ]
 }
