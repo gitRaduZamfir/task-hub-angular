@@ -1,28 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+
 
 @Component({
+  standalone:true,
   selector: 'app-login',
   templateUrl: './login.component.html',
-  imports:[MatFormFieldModule, ReactiveFormsModule],
+  imports:[MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatIconModule, MatButtonModule, MatCardModule],
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  fb: FormBuilder;
+  fb = inject(FormBuilder);
   loginForm = this.fb.group({
     username: ['', Validators.required],
     password: ['', Validators.required]
   });
 
   constructor(
-    fb: FormBuilder,
     private authService: AuthService,
     private router: Router
   ) {
-     this.fb = fb;
+  
   }
 
   
@@ -49,4 +54,4 @@ export class LoginComponent {
   }
 }
 
-//TODO: de rezolvat eroarea cu fb
+//TODO: de adaugat logout
