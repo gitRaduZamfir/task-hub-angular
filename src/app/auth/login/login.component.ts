@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,17 +7,26 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  standalone:true,
+  standalone: true,
   selector: 'app-login',
   templateUrl: './login.component.html',
-  imports:[MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatIconModule, MatButtonModule, MatCardModule],
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  imports: [
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatSnackBarModule
+  ]
 })
-export class LoginComponent {
+export class LoginComponent{
   fb = inject(FormBuilder);
+
   loginForm = this.fb.group({
     username: ['', Validators.required],
     password: ['', Validators.required]
@@ -25,21 +34,20 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar,
   ) {
-  
+    
   }
 
-  
-
-  ngOnInit(){
-    if(this.authService.getUser()){
+  ngOnInit() {
+    if (this.authService.getUser()) {
       this.router.navigate(['/tasks']);
       return;
     }
   }
 
-    onLogin() {
+  onLogin() {
     if (this.loginForm.invalid) return;
 
     const { username, password } = this.loginForm.value;
@@ -48,10 +56,12 @@ export class LoginComponent {
       if (users.length > 0) {
         this.router.navigate(['/tasks']);
       } else {
-        alert('Invalid credentials');
+        this.snackBar.open("Incorrect credentials!", "Close", {
+          duration: 3000,
+          panelClass: ["snack-error"]
+        });
+        this.loginForm.reset();
       }
     });
   }
 }
-
-//TODO: de adaugat logout

@@ -6,13 +6,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from '../../core/services/auth.service';
+
 
 
 
 @Component({
   standalone: true,
   selector: 'app-task-list',
-  imports: [CommonModule, MatCardModule, MatIconModule, RouterModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, RouterModule, MatButtonModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
 })
@@ -20,7 +23,7 @@ export class TaskListComponent {
 
   tasks: Task[] = [];
   
-  constructor(private taskService: TaskService, private router: Router){}
+  constructor(private taskService: TaskService, private router: Router, private authService: AuthService){}
 
   ngOnInit(): void{
     this.taskService.getTasks().subscribe((data)=>{
@@ -54,5 +57,11 @@ export class TaskListComponent {
       },
       error: (err) => console.error(err)
     });
+  }
+
+  logOut(): void{
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    return;
   }
 }
