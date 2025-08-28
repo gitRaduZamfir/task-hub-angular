@@ -1,12 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-
-interface User {
-  id: number;
-  username: string;
-  password: string;
-}
+import { User } from '../models/user.model';
 
 
 @Injectable({

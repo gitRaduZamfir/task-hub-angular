@@ -16,7 +16,9 @@ import { RouterModule } from '@angular/router';
 import { CategoriesComponent } from "./categories/categories.component";
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { Task } from '../../core/models/task.model';
-import { generateId } from '../../core/utils/utils';
+import { AuthService } from '../../core/services/auth.service';
+import { User } from '../../core/models/user.model';
+
 
 @Component({
   standalone: true,
@@ -42,17 +44,20 @@ export class TaskFormComponent {
   categories: string[] = [];
   task!: Task;
   taskId: string | null = null;
-  newId: string = '';
+  currentUser: User | null = null;
 
   constructor(private fb: FormBuilder, 
     private taskService: TaskService, 
     private router: Router, 
-    private route: ActivatedRoute){
+    private route: ActivatedRoute,
+    private auth: AuthService){
 
-    this.newId = generateId();
-      
+    this.currentUser = this.auth.getUser();
+
+
     this.taskForm = this.fb.group({
-      id: [this.newId],
+      user:[this.currentUser?.username],
+      id: [''],
       title: ['', Validators.required],
       date: ['', Validators.required],
       time: [''],
@@ -65,9 +70,11 @@ export class TaskFormComponent {
     
     this.taskId = this.route.snapshot.paramMap.get('id');
     if (this.taskId) {
-      this.taskService.getTask(this.taskId).subscribe((data) => {
-        this.task = data;
+      this.taskService.getTask(this.taskId).subscribe((task) => {
+        this.task = task;
+        console.log(this.task)
         this.taskForm.patchValue({
+          user: this.task.user,
           id: this.task.id,
           title: this.task.title,
           date: this.task.date ? new Date(this.task.date) : '',
@@ -85,6 +92,10 @@ export class TaskFormComponent {
       return;
     }
     const newTask = this.taskForm.value;
+
+    if (!this.taskId) {
+      delete newTask.id; 
+    }
 
     if(this.taskId){
       this.taskService.editTask(newTask).subscribe({

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../core/services/task.service';
 import { Task } from '../../core/models/task.model';
@@ -26,7 +26,7 @@ export class TaskListComponent {
   constructor(private taskService: TaskService, private router: Router, private authService: AuthService){}
 
   ngOnInit(): void{
-    this.taskService.getTasks().subscribe((data)=>{
+    this.taskService.getUserTasks().subscribe((data)=>{
       this.tasks = data;
     })
   }
@@ -36,7 +36,7 @@ export class TaskListComponent {
     updatedTask.done = true;
     this.taskService.editTask(updatedTask).subscribe({
       next: () => {
-        this.taskService.getTasks().subscribe((data)=>{
+        this.taskService.getUserTasks().subscribe((data)=>{
           this.tasks = data;
         })
       },
